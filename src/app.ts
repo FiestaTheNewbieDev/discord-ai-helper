@@ -5,8 +5,8 @@ if (process.env.NODE_ENV === 'production') require('module-alias/register');
 import chalk from 'chalk';
 import {Client, Collection, IntentsBitField} from 'discord.js';
 import dotenv from 'dotenv';
-import registerEvents from '@/handlers/eventsHandler';
-import registerCommands from '@/handlers/commandsHandler';
+import registerEvents from '@/loaders/eventsLoader';
+import registerCommands from '@/loaders/commandsLoader';
 import IClient from '@/interfaces/IClient';
 
 dotenv.config();
