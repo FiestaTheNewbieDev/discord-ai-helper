@@ -31,9 +31,10 @@ export default {
             ephemeral: interaction.options.getBoolean('private')
         });
         const prompt = interaction.options.getString('prompt');
+        const n = interaction.options.getInteger('n') || 1;
         try {
             await interaction.editReply(
-                (await runDallE3Prompt(prompt)).data
+                (await runDallE3Prompt(prompt, n)).data
                     .map(item => item.url)
                     .join('\n')
             );

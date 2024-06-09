@@ -1,5 +1,5 @@
 {
-    "name": "discord-bot-template",
+    "name": "discord-ai-helper",
     "version": "1.0.0",
     "private": true,
     "description": "",
@@ -11,7 +11,7 @@
     },
     "keywords": [],
     "author": "FiestaTheNewbieDev",
-    "license": "ISC",
+    "license": "MIT",
     "_moduleAliases": {
         "@": "build"
     },

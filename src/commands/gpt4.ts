@@ -46,7 +46,6 @@ export default {
             await interaction.followUp(
                 'An error occurred while processing your request.'
             );
-            console.error(error);
         }
     }
 } as ICommand;

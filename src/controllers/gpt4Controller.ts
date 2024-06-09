@@ -8,7 +8,7 @@ export default async function runPrompt(history: IMessage[]) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            model: 'gpt-4',
+            model: 'gpt-4-1106-preview',
             messages: history
         })
     };
