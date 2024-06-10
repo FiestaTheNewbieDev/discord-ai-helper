@@ -1,3 +1,4 @@
+import interractiveChatController from '@/controllers/interractiveChatController';
 import ICommand from '@/interfaces/ICommand';
 import IEvent from '@/interfaces/IEvent';
 
@@ -6,7 +7,7 @@ const prefix = '!';
 export default {
     name: 'messageCreate',
     once: false,
-    execute(client, message) {
+    async execute(client, message) {
         if (message.author.bot) return;
 
         if (message.content.startsWith(prefix)) {
@@ -19,6 +20,14 @@ export default {
 
             const command: ICommand = client.commands.get(commandName);
             if (command) command.run(client, message, args);
+            return;
+        }
+
+        if (message.mentions.has(client.user)) {
+            message.channel.sendTyping();
+            message.channel.send(
+                await interractiveChatController(client, message)
+            );
         }
     }
 } as IEvent;
