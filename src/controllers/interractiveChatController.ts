@@ -1,40 +1,35 @@
-// import runGpt4Prompt from '@/controllers/gpt4Controller';
-// import runDallE3Prompt from '@/controllers/dallE3Controller';
-// import IMessage from '@/interfaces/IMessage';
-// import type IRequest from '@/interfaces/IRequest';
+import runGpt4Prompt from '@/controllers/gpt4Controller';
+import runDallE3Prompt from '@/controllers/dallE3Controller';
+import IMessage from '@/interfaces/IMessage';
+import type IRequest from '@/interfaces/IRequest';
 
 export default async (client, message) => {
-    /*
     let instructions: string = `
     Follow these instructions:
-    - ALWAYS return your response as JSON object following this model:
-    type RequestType = 'TEXT' | 'PICTURE';
-    interface IAbstractRequest {
-        type: RequestType;
-    }
-    interface ITextRequest extends IAbstractRequest {
-        type: 'TEXT';
-    }
-    interface IPictureRequest extends IAbstractRequest {
+    - IF you interpret user message as a request to generate an image, format your response as JSON object following this model:
+    interface IPictureRequest {
         type: 'PICTURE';
         request: {
-            prompt: string;
-            n: number;
-        };
+            prompt: string; # revised prompt in english
+            n: number; # number of images to generate
+        }
     }
-    type IRequest = ITextRequest | IPictureRequest;
-    - IF you interpret this message as a request to generate an image, set type as PICTURE and response as a revised prompt
-    - ELSE set type as TEXT
+    - ELSE IF you interpret user message as a request to generate a text, format your response as JSON object following this model:
+    interface ITextRequest {
+        type: 'TEXT';
+    }
     `;
 
-    const response: IRequest = JSON.parse(
-        (
-            await runGpt4Prompt([
-                {role: 'system', content: instructions},
-                {role: 'user', content: message.content}
-            ] as IMessage[])
-        ).reverse()[0].content
-    );
+    const responseText = (
+        await runGpt4Prompt([
+            {role: 'system', content: instructions},
+            {role: 'user', content: message.content}
+        ] as IMessage[])
+    ).reverse()[0].content;
+
+    console.log(responseText);
+
+    const response: IRequest = JSON.parse(responseText);
     switch (response.type) {
         case 'TEXT':
             instructions = `
@@ -58,5 +53,4 @@ export default async (client, message) => {
         default:
             return 'ERROR ! ERROR ! ERROR !';
     }
-    */
 };
